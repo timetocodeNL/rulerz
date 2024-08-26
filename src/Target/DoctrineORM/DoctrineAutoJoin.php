@@ -43,6 +43,10 @@ class DoctrineAutoJoin
         foreach ($existingJoins as $joins) {
             /** @var \Doctrine\ORM\Query\Expr\Join $join */
             foreach ($joins as $join) {
+                if (!str_contains($join->getJoin(), '.')) {
+                    continue;
+                }
+
                 list($fromAlias, $attribute) = explode('.', $join->getJoin());
                 $relation = $this->getRelation($attribute, $this->getEntity($fromAlias));
 
